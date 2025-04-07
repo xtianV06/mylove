@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Monthsary Love</title>
+    <link rel="icon" href="img/icons.png" type="image/xicon" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body style="background: linear-gradient(135deg, #0d0d0d, #e62572)">
+    <audio id="audioPlayer" src="bg.mp3"></audio>
+    <div class="container">
+      <div class="envelope-wrapper">
+        <div class="envelope">
+          <div class="letter">
+            <div class="text">
+              <strong>Hi Love.</strong>
+              <p>
+                Happy Monthsary Lovee, here is my
+                <span
+                  ><a href="https://www.youtube.com/watch?v=x4LdudFsIFQ"
+                    >message</a
+                  ></span
+                >
+                for you. <br />I LOVE YOU
+              </p>
+              <div class="from">
+                <p>Love,</p>
+                <p>Christian</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="heart"></div>
+      </div>
+    </div>
+    <script>
+      const envelope = document.querySelector(".envelope-wrapper");
+      audioPlayer.volume = 1.0;
+      envelope.addEventListener("click", () => {
+        audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause(); // Play or pause audio
+        envelope.classList.toggle("flap"); // Toggle 'flap' class
+      });
+    </script>
+  </body>
+</html>

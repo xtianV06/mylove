@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Monthsary Love</title>
+    <link rel="icon" href="img/icons.png" type="image/xicon" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .chat-container {
+        background: white;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .chat-header {
+        background: #ff6f91;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      .chat-box {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 15px;
+      }
+
+      .message {
+        margin: 10px 0;
+        font-size: 16px;
+      }
+
+      .bot {
+        color: blue;
+      }
+
+      .user {
+        color: green;
+        text-align: right;
+      }
+
+      .input-area {
+        padding: 10px;
+        border-top: 1px solid #ccc;
+        background-color: #fff;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      @media (max-width: 600px) {
+        .message {
+          font-size: 15px;
+        }
+
+        input[type="text"] {
+          font-size: 15px;
+        }
+
+        .chat-header {
+          font-size: 18px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+        background: white;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 12px;
+        width: 300px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: #aaa;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close:active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body style="background: linear-gradient(135deg, #0d0d0d, #e62572)">
+    <div class="chat-container">
+      <div class="chat-header">Chat with me, Love 💬</div>
+      <div class="chat-box" id="chatBox">
+        <div class="message bot">👦: Hi Love!</div>
+      </div>
+      <div class="input-area">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Type your response..."
+          autofocus
+        />
+      </div>
+    </div>
+
+    <div id="loveModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeLoveModal">&times;</span>
+        <img
+          src="img/imgmodal.jpg"
+          alt="Love Image"
+          style="width: 100%; border-radius: 10px"
+        />
+        <p style="margin-top: 10px">Love, MAHAL NA MAHAL KITA! ❤️</p>
+        <a href="index.html">
+          <button style="margin-top: 15px; padding: 10px 20px; font-size: 16px">
+            Continue
+          </button>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const chatBox = document.getElementById("chatBox");
+      const userInput = document.getElementById("userInput");
+
+      let stage = 0;
+
+      userInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          const userText = userInput.value.trim();
+          if (userText === "") return;
+
+          addMessage(userText, "user");
+          userInput.value = "";
+
+          setTimeout(() => {
+            respond(userText);
+          }, 1000);
+        }
+      });
+
+      function addMessage(text, sender) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${sender}`;
+        msgDiv.textContent = sender === "bot" ? `👦: ${text}` : `${text} :👧`;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function respond(userText) {
+        switch (stage) {
+          case 0:
+            if (
+              userText.toLowerCase().trim() === "hello" ||
+              userText.toLowerCase().trim() === "hi" ||
+              userText.toLowerCase().trim() === "hello love" ||
+              userText.toLowerCase().trim() === "hi love"
+            ) {
+              addMessage("Kamusta ka na my love?", "bot");
+              stage = 1;
+            } else {
+              addMessage("You're supposed to greet me too love 😟", "bot");
+            }
+            break;
+          case 1:
+            if (
+              userText.toLowerCase().trim() === "im fine po" ||
+              userText.toLowerCase().trim() === "i'm fine" ||
+              userText.toLowerCase().trim() === "okay lang" ||
+              userText.toLowerCase().trim() === "okay lang po" ||
+              userText.toLowerCase().trim() === "ok lang po" ||
+              userText.toLowerCase().trim() === "im fine love" ||
+              userText.toLowerCase().trim() === "okay lang po love" ||
+              userText.toLowerCase().trim() === "ok lang love" ||
+              userText.toLowerCase().trim() === "i'm fine po love"
+            ) {
+              addMessage("Good to here love, btw my JOKE ako loveeeeee", "bot");
+              stage = 2;
+            } else {
+              addMessage(
+                'Love, I hope your okay there love, lagi lang ako andito ha"',
+                "bot"
+              );
+            }
+            break;
+          case 2:
+            if (
+              userText.toLowerCase().trim() === "what" ||
+              userText.toLowerCase().trim() === "ano po" ||
+              userText.toLowerCase().trim() === "what po" ||
+              userText.toLowerCase().trim() === "ano po yun?" ||
+              userText.toLowerCase().trim() === "sige po" ||
+              userText.toLowerCase().trim() === "sge love" ||
+              userText.toLowerCase().trim() === "sige po love" ||
+              userText.toLowerCase().trim() === "okay love"
+            ) {
+              addMessage("Knock Knock love", "bot");
+              stage = 3;
+            } else {
+              addMessage('Love, pa isa lang po 😁"', "bot");
+            }
+            break;
+
+          case 3:
+            if (
+              userText.toLowerCase().trim() === "who's there love" ||
+              userText.toLowerCase().trim() === "who's there po" ||
+              userText.toLowerCase().trim() === "who's there" ||
+              userText.toLowerCase().trim() === "whos there love" ||
+              userText.toLowerCase().trim() === "whos there po" ||
+              userText.toLowerCase().trim() === "whos there"
+            ) {
+              addMessage("Mais?", "bot");
+              stage = 4;
+            } else {
+              addMessage("You're supposed to say \"Who's there Love?\"", "bot");
+            }
+            break;
+          case 4:
+            if (userText.toLowerCase() === "mais who") {
+              addMessage("Mais na Mais na kita 🥺", "bot");
+              stage = 5;
+            } else {
+              addMessage(
+                'Love, you\'re supposed to say "Mais who?" love 🥺',
+                "bot"
+              );
+            }
+            break;
+          case 5:
+            if (
+              userText.toLowerCase() === "i miss you more love" ||
+              userText.toLowerCase() === "i miss you too" ||
+              userText.toLowerCase() === "i miss you too love" ||
+              userText.toLowerCase() === "miss na miss na din kita lovee" ||
+              userText.toLowerCase() === "i miss you love"
+            ) {
+              addMessage("MAHAL NA MAHAL KITA LOVE 🥺", "bot");
+              stage = 6;
+            } else {
+              addMessage("Love, di mo ko namimiss love 🥺", "bot");
+            }
+            break;
+          case 6:
+            if (
+              userText.toLowerCase() === "i love you more love" ||
+              userText.toLowerCase() === "mahal na mahal din kita love" ||
+              userText.toLowerCase() === "mahal na mahal din po kita" ||
+              userText.toLowerCase() === "i love you too love"
+            ) {
+              //addMessage("MAHAL NA MAHAL KITA LOVE 🥺", "bot");
+              document.getElementById("loveModal").style.display = "block";
+              stage = 7;
+            } else {
+              addMessage("Love, di mo na ako love 😭", "bot");
+            }
+            break;
+        }
+        document.getElementById("closeLoveModal").onclick = function () {
+          document.getElementById("loveModal").style.display = "none";
+        };
+      }
+    </script>
+  </body>
+</html>

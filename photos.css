@@ -1,5 +1,5 @@
 .gallery {
-  --d: 10s;
+  --d: 12s;
   /* duration */
   display: grid;
   place-items: center; /* Center both horizontally and vertically */
@@ -18,7 +18,14 @@
   animation: slide var(--d) infinite, z-order var(--d) infinite steps(1);
 }
 
-.gallery img:last-child {
+.gallery img {
+  /* Ensure that images are initially hidden off the screen */
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.gallery > img:last-child {
   animation-name: slide, z-order-last;
 }
 
@@ -28,39 +35,78 @@
 }
 
 .gallery > img:nth-child(2) {
-  animation-delay: calc(-0.2 * var(--d));
+  animation-delay: calc(1 * var(--d)); /* Image 2 starts after 1 second */
   --r: -1deg;
 }
 
 .gallery > img:nth-child(3) {
-  animation-delay: calc(-0.4 * var(--d));
+  animation-delay: calc(2 * var(--d)); /* Image 3 starts after 2 seconds */
   --r: -19deg;
 }
 
 .gallery > img:nth-child(4) {
-  animation-delay: calc(-0.6 * var(--d));
+  animation-delay: calc(3 * var(--d)); /* Image 4 starts after 3 seconds */
   --r: 6deg;
 }
 
 .gallery > img:nth-child(5) {
-  animation-delay: calc(-0.8 * var(--d));
+  animation-delay: calc(4 * var(--d)); /* Image 5 starts after 4 seconds */
   --r: -8deg;
 }
 
+.gallery > img:nth-child(6) {
+  animation-delay: calc(5 * var(--d)); /* Image 6 starts after 5 seconds */
+  --r: 10deg;
+}
+
+.gallery > img:nth-child(7) {
+  animation-delay: calc(6 * var(--d)); /* Image 7 starts after 6 seconds */
+  --r: -5deg;
+}
+
+.gallery > img:nth-child(8) {
+  animation-delay: calc(7 * var(--d)); /* Image 8 starts after 7 seconds */
+  --r: 12deg;
+}
+
+.gallery > img:nth-child(9) {
+  animation-delay: calc(8 * var(--d)); /* Image 9 starts after 8 seconds */
+  --r: -3deg;
+}
+
+.gallery > img:nth-child(10) {
+  animation-delay: calc(9 * var(--d)); /* Image 10 starts after 9 seconds */
+  --r: 7deg;
+}
+
+.gallery > img:nth-child(11) {
+  animation-delay: calc(10 * var(--d)); /* Image 11 starts after 10 seconds */
+  --r: -2deg;
+}
+
+.gallery > img:nth-child(12) {
+  animation-delay: calc(11 * var(--d)); /* Image 12 starts after 11 seconds */
+  --r: 9deg;
+}
+
+/* Keyframes to slide images smoothly */
 @keyframes slide {
-  10% {
-    transform: translateX(120%) rotate(var(--r));
+  0% {
+    transform: translateX(100%) rotate(var(--r)); /* Start off-screen */
+    opacity: 0; /* Initially invisible */
   }
-  0%,
-  100%,
-  20% {
-    transform: translateX(0%) rotate(var(--r));
+  50% {
+    transform: translateX(0%) rotate(var(--r)); /* Move to the center */
+    opacity: 1; /* Fully visible */
+  }
+  100% {
+    transform: translateX(100%) rotate(var(--r)); /* End off-screen */
+    opacity: 0; /* Fade out at the end */
   }
 }
 
 @keyframes z-order {
-  10%,
-  20% {
+  0%, 20% {
     z-index: 1;
   }
   80% {
@@ -69,8 +115,7 @@
 }
 
 @keyframes z-order-last {
-  10%,
-  20% {
+  0%, 20% {
     z-index: 1;
   }
   90% {
